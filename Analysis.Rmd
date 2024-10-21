@@ -47,7 +47,7 @@ dt4 <- fread("./Data/channel4.csv")
 
 dt <- rbind(dt1, dt2, dt3, dt4)
 
-`````
+```
 
 #### Deskriptiva na dnevnoj razini
 ```{r echo=F, eval=T, message=F , warning= FALSE}
