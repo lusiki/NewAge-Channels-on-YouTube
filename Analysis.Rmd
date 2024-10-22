@@ -119,8 +119,10 @@ dt_stats <- dt %>%
   ) %>%
   mutate_if(is.numeric, round, digits = 0)  # Round the results to 2 decimal places
 
-# Display the result
-print(dt_stats)
+# Display the result dynamically using the DT package
+
+datatable(dt_stats, rownames = FALSE, options = list(pageLength = 5))
+
 ```
 
 
@@ -260,8 +262,16 @@ n_tokenTidy %>%
 
 ```
 
-#### Najčešće riječi (video title)
 
+
+
+
+
+
+
+
+
+#### Najčešće riječi (video title)
 ```{r echo=F, eval=T, message=F , warning= FALSE}
 n_tokenTidy %>%
   group_by(word) %>%
@@ -271,6 +281,30 @@ n_tokenTidy %>%
   filter(count > 10) %>%
   datatable(., options = list(scrollX = TRUE, scrollY = "500px"))
 
+```
+
+```{r echo=F, eval=T, message=F , warning= FALSE, fig.height=15, fig.width=15}
+# Filter, group, and count words for all channelTitles
+word_freq_data <- n_tokenTidy %>%
+  filter(channelTitle %in% c("Anita Luis Osobni razvoj", 
+                             "Bojana Svalina", 
+                             "SAFARI DUHA", 
+                             "Put u središte sebe")) %>%
+  group_by(channelTitle, word) %>%
+  count() %>%
+  filter(n > 10) %>%
+  ungroup()
+
+# Create a plot with facets for each channelTitle
+ggplot(word_freq_data, aes(x = reorder(word, n), y = n)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ channelTitle, scales = "free_y") +  # Facet by channelTitle
+  labs(title = "Najčešće riječi u video title po kanalu", 
+       x = "Riječ", 
+       y = "Broj pojavljivanja") +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 8))
 ```
 
 
