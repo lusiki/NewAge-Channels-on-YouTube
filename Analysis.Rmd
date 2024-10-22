@@ -34,6 +34,7 @@ library(xlsx)
 library(knitr)
 library(kableExtra)
 library(stopwords)
+library(here)
 
 ```
 
@@ -41,9 +42,7 @@ library(stopwords)
 
 ```{r echo=F, eval=T, message=F , warning= FALSE}
 
-getwd()
-
-source(here("stemmer", "stemmer.R"))
+source(here("stemmer", "stemmer.R"), encoding = "UTF-8")
 source(here("stemmer", "text_analysis.R"))
 
 ```
