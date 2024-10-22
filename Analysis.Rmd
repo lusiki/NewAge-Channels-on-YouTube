@@ -40,15 +40,14 @@ library(here)
 
 
 
-```{r echo=F, eval=F, message=F , warning= FALSE}
-stemmer_path <- normalizePath("C:/Users/lukas/Dropbox/Članci/NewAge/NewAge-Channels-on-YouTube/stemmer/stemmer.R", winslash = "/", mustWork = TRUE)
-source(stemmer_path, encoding = "UTF-8")
+```{r echo=F, eval=T, message=F , warning= FALSE}
+source("./Source/stemmer.R")
+source("./Source/text_analysis.R")
 ```
 
 
 ```{r echo=F, eval=T, message=F , warning= FALSE}
-
-dt1 <- fread("./Data/channel1.csv")
+dt1 <- fread("./Data/channel1.csv" , encoding = "UTF-8")
 dt2 <- fread("./Data/channel2.csv")
 dt3 <- fread("./Data/channel3.csv")
 dt4 <- fread("./Data/channel4.csv")
@@ -260,6 +259,11 @@ n_token %>%
 n_tokenTidy %>%
   filter(!is.na(word)) -> n_tokenTidy
 
+
+n_tokenTidy %>%
+   mutate(stem = sapply(word, write_tokens))  %>%
+        mutate(stem = sapply(strsplit(stem, "\t"), `[`, 2)) -> n_tokenTidy
+
 # check
 # fb_tokenTidy  %>% 
 #   select(FROM, word, MENTION_SNIPPET ) %>%
@@ -282,7 +286,7 @@ n_tokenTidy %>%
 #### Najčešće riječi (video title)
 ```{r echo=F, eval=T, message=F , warning= FALSE}
 n_tokenTidy %>%
-  group_by(word) %>%
+  group_by(stem) %>%
   summarise(count = n()) %>%
   mutate(percent = round(count / sum(count) * 100,2)) %>% 
   arrange(desc(count)) %>%
@@ -298,13 +302,13 @@ word_freq_data <- n_tokenTidy %>%
                              "Bojana Svalina", 
                              "SAFARI DUHA", 
                              "Put u središte sebe")) %>%
-  group_by(channelTitle, word) %>%
+  group_by(channelTitle, stem) %>%
   count() %>%
   filter(n > 10) %>%
   ungroup()
 
 # Create a plot with facets for each channelTitle
-ggplot(word_freq_data, aes(x = reorder(word, n), y = n)) +
+ggplot(word_freq_data, aes(x = reorder(stem, n), y = n)) +
   geom_col() +
   coord_flip() +
   facet_wrap(~ channelTitle, scales = "free_y") +  # Facet by channelTitle
