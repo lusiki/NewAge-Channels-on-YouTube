@@ -1,6 +1,6 @@
 # NewAge-Channels-on-YouTube
 
-![Viz](photo.webp)
+![Viz](photo.jpg)
 
 
 
