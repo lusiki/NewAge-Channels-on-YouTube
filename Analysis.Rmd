@@ -38,6 +38,17 @@ library(stopwords)
 ```
 
 
+
+```{r echo=F, eval=T, message=F , warning= FALSE}
+
+getwd()
+
+source(here("stemmer", "stemmer.R"))
+source(here("stemmer", "text_analysis.R"))
+
+```
+
+
 ```{r echo=F, eval=T, message=F , warning= FALSE}
 
 dt1 <- fread("./Data/channel1.csv")
