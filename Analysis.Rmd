@@ -40,11 +40,9 @@ library(here)
 
 
 
-```{r echo=F, eval=T, message=F , warning= FALSE}
-
-source(here("stemmer", "stemmer.R"), encoding = "UTF-8")
-source(here("stemmer", "text_analysis.R"))
-
+```{r echo=F, eval=F, message=F , warning= FALSE}
+stemmer_path <- normalizePath("C:/Users/lukas/Dropbox/Članci/NewAge/NewAge-Channels-on-YouTube/stemmer/stemmer.R", winslash = "/", mustWork = TRUE)
+source(stemmer_path, encoding = "UTF-8")
 ```
 
 
