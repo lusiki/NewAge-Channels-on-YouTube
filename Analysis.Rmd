@@ -671,6 +671,8 @@ n_tokenTidy %>%
 
 ```
 
+#### Najčešće riječi (korijeni) za pojedinačne kanale
+
 ```{r echo=F, eval=T, message=F , warning= FALSE, fig.height=18, fig.width=18}
 # Filter, group, and count words for all channelTitles
 word_freq_data <- n_tokenTidy %>%
@@ -680,7 +682,7 @@ word_freq_data <- n_tokenTidy %>%
                              "Put u središte sebe")) %>%
   group_by(channelTitle, stem) %>%
   count() %>%
-  filter(n > 10) %>%
+  filter(n > 40) %>%
   ungroup()
 
 # Create a plot with facets for each channelTitle
@@ -809,7 +811,7 @@ ggplot(word_freq_data, aes(x = reorder(bigram, n), y = n)) +
 #### Tematska analiza za sve kanale (možemo napraviti i za pojedinačne kanale!?)
 ##### LDA 2 model
 
-```{r eval = F, echo = F, message=F, warning=F, fig.height=15, fig.width=15}
+```{r eval = T, echo = F, message=F, warning=F, fig.height=15, fig.width=15}
 
 dtm <- n_tokenTidy %>%
   count(videoId, stem) %>%
@@ -848,7 +850,7 @@ top_terms %>%
 #### Tematska analiza za sve kanale
 ##### LDA 3 model
 
-```{r eval = F, echo = F, message=F, warning=F, fig.height=15, fig.width=15}
+```{r eval = T, echo = F, message=F, warning=F, fig.height=15, fig.width=15}
 lda_model3 <- LDA(dtm, k = 3, control = list(seed = 1234))
 
 # Tidy the LDA output
