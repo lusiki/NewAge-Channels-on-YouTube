@@ -270,10 +270,27 @@ n_tokenTidy %>%
 n_tokenTidy %>%
   group_by(stem) %>%
   summarise(count = n()) %>%
-  mutate(percent = round(count / sum(count) * 100,2)) %>% 
+  mutate(percent = round(count / sum(count) * 100,2)) %>%
   arrange(desc(count)) %>%
   filter(count > 10) %>%
   datatable(., options = list(scrollX = TRUE, scrollY = "500px"))
+
+
+
+n_tokenTidy %>%
+  group_by(stem) %>% 
+  summarise(
+    count = n(),
+    words = paste(unique(word), collapse = ", ") # Combine all unique words for each stem
+  ) %>%
+  mutate(percent = round(count / sum(count) * 100,2)) %>%
+  arrange(desc(count)) %>%
+  filter(count > 10) %>%
+  datatable(., options = list(scrollX = TRUE, scrollY = "500px"))
+
+
+
+
 
 ```
 
